@@ -12,25 +12,33 @@ export default function LoginScreen({ navigation }) {
     if (nomina.trim() === '') {
       Alert.alert('Error', 'Por favor ingrese su número de nómina.');
       return;
+    }else{
+      const Fakeuser={
+        R_status : 'activo',
+        nomina : 2345,
+        R_nombre : "jose",
+        R_posicion: 'jefe'
+      };
+      navigation.navigate('MainTabs', {user : Fakeuser});
     }
 
-    try {
-      const response = await axios.post('http://201.147.141.185:81/consumos/apps/WS_GV_SAP_NOM_ECO.php', {
-        nomina: nomina
-      });
+    // try {
+    //   const response = await axios.post('http://201.147.141.185:81/consumos/apps/WS_GV_SAP_NOM_ECO.php', {
+    //     nomina: nomina
+    //   });
 
-      const { tabla_nomina } = response.data;
+    //   const { tabla_nomina } = response.data;
 
-      if (tabla_nomina && tabla_nomina.R_status === 'ACTIVO') {
-        setUser(tabla_nomina); // Establece los datos del usuario en el contexto
-        navigation.navigate('MainTabs', { user: tabla_nomina });
-      } else {
-        Alert.alert('Error', 'Número de nómina no válido o usuario inactivo.');
-      }
-    } catch (error) {
-      Alert.alert('Error', 'Hubo un problema con la solicitud. Por favor, inténtelo de nuevo.');
-      console.error(error);
-    }
+    //   if (tabla_nomina && tabla_nomina.R_status === 'ACTIVO') {
+    //     setUser(tabla_nomina); // Establece los datos del usuario en el contexto
+    //     navigation.navigate('MainTabs', { user: tabla_nomina });
+    //   } else {
+    //     Alert.alert('Error', 'Número de nómina no válido o usuario inactivo.');
+    //   }
+    // } catch (error) {
+    //   Alert.alert('Error', 'Hubo un problema con la solicitud. Por favor, inténtelo de nuevo.');
+    //   console.error(error);
+    // }
   };
 
   return (
@@ -52,6 +60,7 @@ export default function LoginScreen({ navigation }) {
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
           />
+          {/* onPress={handleLogin} */}
           <TouchableOpacity style={styles.button} onPress={handleLogin}>
             <Text style={styles.buttonText}>Ingresar</Text>
           </TouchableOpacity>

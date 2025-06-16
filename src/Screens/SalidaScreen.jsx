@@ -12,22 +12,31 @@ export default function SalidaScreen({ route, navigation }) {
  // console.log('SalidaScreen user:', user);
 
   const handleNext = async () => {
-    try {
-      const response = await axios.post('http://201.147.141.185:81/consumos/apps/WS_GV_SAP_NOM_ECO.php', {
-        economico: numeroEconomico
-      });
+    const fakeinfo= {
+           R_economico : 3242,
+           R_descripcion: 'lol',
+           R_placa:  '3AS3',
+           R_tipo : 'Rapido'
 
-      const { tabla_economico } = response.data;
-
-      if (tabla_economico) {
-        navigation.navigate('SalidaScreenForm', { tabla_economico, user });
-      } else {
-        Alert.alert('Error', 'Número económico no válido.');
-      }
-    } catch (error) {
-      Alert.alert('Error', 'Hubo un problema con la solicitud. Por favor, inténtelo de nuevo.');
-      console.error(error);
     }
+    navigation.navigate('SalidaScreenForm',{tabla_economico: fakeinfo, user});
+    // try {
+    //   const response = await axios.post('http://201.147.141.185:81/consumos/apps/WS_GV_SAP_NOM_ECO.php', {
+    //     economico: numeroEconomico
+    //   });
+
+    //   const { tabla_economico } = response.data;
+
+    //   if (tabla_economico) {
+    //     navigation.navigate('SalidaScreenForm', { tabla_economico, user });
+    //   } else {
+    //     Alert.alert('Error', 'Número económico no válido.');
+    //   }
+    // } catch (error) {
+    //   Alert.alert('Error', 'Hubo un problema con la solicitud. Por favor, inténtelo de nuevo.');
+    //   console.error(error);
+    // }
+
   };
 
   return (

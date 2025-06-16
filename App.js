@@ -135,6 +135,7 @@ function MainStack() {
         })}
       />
       <Stack.Screen name="ControlLlantas" component={ControlLlantasScreen} options={{ title: 'Control de Llantas' }} />
+      <Stack.Screen name="ValijaDigital" component={ValijaDigitalScreen} options={{ title: 'Valija Dijital' }} />
     </Stack.Navigator>
   );
 }
