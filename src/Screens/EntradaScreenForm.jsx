@@ -1,5 +1,5 @@
-  import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, TextInput } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import icon1 from '../../assets/1.png';
@@ -8,6 +8,8 @@ import icon3 from '../../assets/3.png';
 import icon4 from '../../assets/4.png';
 import icon5 from '../../assets/5.png';
 import icon6 from '../../assets/6.png';
+import Like from '../../assets/Like.png';
+import Dislike from '../../assets/Dislike.png';
 
 export default function EntradaScreenForm({ route, navigation }) {
   const { tabla_economico, user } = route.params;
@@ -20,9 +22,12 @@ export default function EntradaScreenForm({ route, navigation }) {
   ]);
 
   const [checkboxes, setCheckboxes] = useState(Array(6).fill(false));
+  const [checkStatus, setCheckStatus] = useState(Array(2).fill(false));
   const boxTexts = [
     'Placa Frontal', 'Placa Trasera', 'Licencia Conducir', 'Tarjeta circulación', 'Poliza Seguro', 'Comprobante Verificación'
   ];
+  const unitStatus = ['Bueno','Malo'];
+    const unitStatusIcon = [Like, Dislike];
 
   const icons = [icon1, icon2, icon3, icon4, icon5, icon6];
 
@@ -30,6 +35,11 @@ export default function EntradaScreenForm({ route, navigation }) {
     const newCheckboxes = [...checkboxes];
     newCheckboxes[index] = !newCheckboxes[index];
     setCheckboxes(newCheckboxes);
+  };
+   const handleCheckStatusToggle = (index) => {
+    const newCheckboxes = [...checkStatus];
+    newCheckboxes[index] = !newCheckboxes[index];
+    setCheckStatus(newCheckboxes);
   };
 
   const handleSubmit = () => {
@@ -60,6 +70,13 @@ export default function EntradaScreenForm({ route, navigation }) {
 
       <View style={styles.sectionContainer}>
         <Text style={styles.subtitle}>Datos de la entrada</Text>
+        <Text style={styles.subsubtitle}> Ingrese kilometraje</Text>
+        <TextInput
+          style={styles.pickerContainer}
+          placeholder='Kilometraje'
+          keyboardType='numeric'
+        />
+
         <Text style={styles.subsubtitle}>Destino</Text>
         <DropDownPicker
           open={open}
@@ -73,6 +90,34 @@ export default function EntradaScreenForm({ route, navigation }) {
       </View>
 
       <View style={styles.sectionContainer}>
+        <Text style={styles.subsubtitle}>Estado de la unidad</Text>
+        {/* Modificar para no permitir seleccionar ambas opciones */}
+        {[0].map((row) => (
+          <View style={styles.row} key={row}>
+            {[0, 1].map((col) => {
+              const ID = row * 2 + col;
+              return (
+                <TouchableOpacity
+                  style={styles.squareBox}
+                  key={col}
+                  onPress={() => handleCheckStatusToggle(ID)}
+                >
+                  <Image source={unitStatusIcon[ID]} style={styles.icon} />
+                  <Text style={styles.textSquare}>{unitStatus[ID]}</Text>
+                  <View
+                    style={[
+                      styles.checkbox,
+                      checkStatus[ID] && styles.checkboxSelected,
+                    ]}
+                  >
+                    {checkStatus[ID] && <Text style={styles.checkmark}>✓</Text>}
+                  </View>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        ))}
+
         <Text style={styles.subsubtitle}>Documentación</Text>
         {[0, 1, 2].map((row) => (
           <View style={styles.row} key={row}>
@@ -84,7 +129,7 @@ export default function EntradaScreenForm({ route, navigation }) {
                   key={col}
                   onPress={() => handleCheckboxToggle(index)}
                 >
-                <Image source={icons[index]} style={styles.icon} />
+                  <Image source={icons[index]} style={styles.icon} />
                   <Text style={styles.textSquare}>{boxTexts[index]}</Text>
                   <View
                     style={[

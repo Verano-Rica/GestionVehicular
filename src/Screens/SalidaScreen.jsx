@@ -17,7 +17,6 @@ export default function SalidaScreen({ route, navigation }) {
            R_descripcion: 'lol',
            R_placa:  '3AS3',
            R_tipo : 'Rapido'
-
     }
     navigation.navigate('SalidaScreenForm',{tabla_economico: fakeinfo, user});
     // try {

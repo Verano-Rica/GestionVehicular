@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image, Keyb
 import axios from 'axios';
 import { useUser } from '../contexts/UserContext.jsx'; // Importa el contexto
 
+
 export default function LoginScreen({ navigation }) {
   const [nomina, setNomina] = useState('');
   const [isFocused, setIsFocused] = useState(false);
@@ -15,7 +16,7 @@ export default function LoginScreen({ navigation }) {
     }else{
       const Fakeuser={
         R_status : 'activo',
-        nomina : 2345,
+        R_nomina : 2345,
         R_nombre : "jose",
         R_posicion: 'jefe'
       };
