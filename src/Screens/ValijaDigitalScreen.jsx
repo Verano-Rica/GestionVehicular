@@ -14,7 +14,7 @@ export default function ValijaDigitalScreen() {
           placeholder="Número de nómina"
           keyboardType="numeric"
         />
-        <TouchableOpacity style={{ top:'-10%',left: '55%'}}>
+        <TouchableOpacity style={{ top:'-11%',left: '55%'}}>
           <Icon name="search" size={35} color="#900" />
         </TouchableOpacity>
 
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   subcontainer: {
     flex: 1,
     width: 380,
-    paddingLeft: 15,
+    paddingLeft: 25,
     paddingTop: 15,
     backgroundColor: '#fff'
   },
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     paddingBottom: 15
   },
   input: {
-    width: '50%',
+    width: '65%',
     height: '8%',
     paddingLeft: 15,
     fontSize: 15,
