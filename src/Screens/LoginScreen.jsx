@@ -17,8 +17,8 @@ export default function LoginScreen({ navigation }) {
       const Fakeuser={
         R_status : 'activo',
         R_nomina : 2345,
-        R_nombre : "jose",
-        R_posicion: 'jefe'
+        R_nombre : "Jesus Carbajal",
+        R_posicion: 'Especialista en Desarrollo Jr.'
       };
       navigation.navigate('MainTabs', {user : Fakeuser});
     }

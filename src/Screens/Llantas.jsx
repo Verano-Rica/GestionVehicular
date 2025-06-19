@@ -2,13 +2,36 @@ import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native';
 import { Modal, View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, Alert } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import Signature from 'react-native-signature-canvas';
+import { useRef } from 'react';
 
 
-export default function ControlLlantasScreen() {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [fecha, setFecha] = useState('');
-  const [prioridad, setPrioridad] = useState('Alta');
-  const [descripcion, setDescripcion] = useState('');
+export default function ControlLlantasScreen() {   //-------------|
+  const [modalVisible, setModalVisible] = useState(false);   //   |
+  const [fecha, setFecha] = useState('');                     //  |------> User inputs for the modal
+  const [prioridad, setPrioridad] = useState('Alta');       //    |
+  const [descripcion, setDescripcion] = useState('');//-----------|
+
+
+  // User inputs for tire modal
+  const [llantaModalVisible, setLlantaModalVisible] = useState(false);
+  const [numeroLlantaInput, setNumeroLlantaInput] = useState('');
+  const [desgaste, setDesgaste] = useState('');
+  const [tipoPiso, setTipoPiso] = useState('O'); // 'O' o 'U'
+  const [medidaLlanta, setMedidaLlanta] = useState('');
+  const [comentario, setComentario] = useState('');
+  const [llantaSeleccionada, setLlantaSeleccionada] = useState({    //Mas adelante llenar los campos con una consulta a la API, pero por ahora estan Hardcodeados
+    posicion: '',
+    noLlanta: '',
+    marca: '',
+  });
+
+
+  // Modal para firma
+  const [firmaModalVisible, setFirmaModalVisible] = useState(false);
+  const [firmaData, setFirmaData] = useState(null);
+  const signatureRef = useRef(null);
+
   return (
 
     <SafeAreaView style={{ flex: 1 }}>
@@ -52,13 +75,28 @@ export default function ControlLlantasScreen() {
           <View style={styles.tireRow}>
             <TouchableOpacity
               activeOpacity={0.6}
-              onPress={() => Alert.alert('Llantas', 'Llanta delantera izquierda')}
+              onPress={() => {
+                setLlantaSeleccionada({
+                  posicion: '1',
+                  noLlanta: '140893',
+                  marca: 'GOODYEAR',
+                });
+                setLlantaModalVisible(true);
+              }}
             >
               <Image source={require('../../assets/tire.png')} style={styles.tire} />
             </TouchableOpacity>
+
             <TouchableOpacity
               activeOpacity={0.6}
-              onPress={() => Alert.alert('Llantas', 'Llanta delantera derecha')}
+              onPress={() => {
+                setLlantaSeleccionada({
+                  posicion: '2',
+                  noLlanta: '140893',
+                  marca: 'GOODYEAR',
+                });
+                setLlantaModalVisible(true);
+              }}
             >
               <Image source={require('../../assets/tire.png')} style={styles.tire} />
             </TouchableOpacity>
@@ -69,20 +107,35 @@ export default function ControlLlantasScreen() {
           <View style={styles.tireRow}>
             <TouchableOpacity
               activeOpacity={0.6}
-              onPress={() => Alert.alert('Llantas', 'Llanta trasera izquierda')}
+              onPress={() => {
+                setLlantaSeleccionada({
+                  posicion: '3',
+                  noLlanta: '140893',
+                  marca: 'GOODYEAR',
+                });
+                setLlantaModalVisible(true);
+              }}
             >
               <Image source={require('../../assets/tire.png')} style={styles.tire} />
             </TouchableOpacity>
+
             <TouchableOpacity
               activeOpacity={0.6}
-              onPress={() => Alert.alert('Llantas', 'Llanta trasera derecha')}
+              onPress={() => {
+                setLlantaSeleccionada({
+                  posicion: '4',
+                  noLlanta: '140893',
+                  marca: 'GOODYEAR',
+                });
+                setLlantaModalVisible(true);
+              }}
             >
               <Image source={require('../../assets/tire.png')} style={styles.tire} />
             </TouchableOpacity>
           </View>
         </View>
 
-        <TouchableOpacity style={[styles.button, styles.firmaButton]}>
+        <TouchableOpacity style={[styles.button, styles.firmaButton]} onPress={() => setFirmaModalVisible(true)}>
           <Text style={styles.buttonText}>FIRMA</Text>
         </TouchableOpacity>
 
@@ -143,6 +196,160 @@ export default function ControlLlantasScreen() {
             </View>
 
           </View>
+        </Modal>
+
+        <Modal
+          visible={llantaModalVisible}
+          animationType='slide'
+          transparent
+          onRequestClose={() => setLlantaModalVisible(false)}
+        >
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>Posición: {llantaSeleccionada.posicion}</Text>
+
+
+              <View style={styles.row}>
+                <Text style={styles.label}>No. Llanta:</Text>
+                <Text style={styles.value}>{llantaSeleccionada.noLlanta}</Text>
+              </View>
+
+              <View style={styles.row}>
+                <Text style={styles.label}>Marca:</Text>
+                <Text style={styles.value}>{llantaSeleccionada.marca}</Text>
+              </View>
+
+
+
+
+
+
+              <Text style={styles.modalLabel}>No. Llanta:</Text>
+              <TextInput
+                style={styles.modalInput}
+                keyboardType="numeric"
+                value={numeroLlantaInput}
+                onChangeText={setNumeroLlantaInput}
+              />
+
+              <Text style={styles.modalLabel}>Desgaste:</Text>
+              <TextInput
+                style={styles.modalInput}
+                keyboardType="numeric"
+                value={desgaste}
+                onChangeText={setDesgaste}
+              />
+
+              <Text style={styles.modalLabel}>Tipo de Piso:</Text>
+              <View style={styles.radioGroup}>
+                {['O', 'U'].map(tipo => (
+                  <TouchableOpacity key={tipo} style={styles.radioOption} onPress={() => setTipoPiso(tipo)}>
+                    <View style={[styles.radioCircle, tipoPiso === tipo && styles.radioSelected]} />
+                    <Text>{tipo}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+
+              <Text style={styles.modalLabel}>Medida de Llanta:</Text>
+              <TextInput
+                style={styles.modalInput}
+                value={medidaLlanta}
+                onChangeText={setMedidaLlanta}
+              />
+
+              <Text style={styles.modalLabel}>Comentario:</Text>
+              <TextInput
+                style={[styles.modalInput, { height: 60 }]}
+                multiline
+                value={comentario}
+                onChangeText={setComentario}
+              />
+
+              <View style={styles.modalButtons}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => {
+                    console.log({ numeroLlantaInput, desgaste, tipoPiso, medidaLlanta, comentario });
+                    setLlantaModalVisible(false);
+                  }}
+                >
+                  <Text style={styles.buttonText}>Evaluar</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={[styles.button, { backgroundColor: '#999' }]}
+                  onPress={() => setLlantaModalVisible(false)}
+                >
+                  <Text style={styles.buttonText}>Cerrar</Text>
+                </TouchableOpacity>
+              </View>
+
+
+            </View>
+          </View>
+
+        </Modal>
+
+
+        <Modal
+          visible={firmaModalVisible}
+          animationType='slide'
+          transparent
+          onRequestClose={() => setFirmaModalVisible(false)}
+        >
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>Firma Digital</Text>
+
+              <View style={{ height: 300, borderWidth: 1, borderColor: '#ccc', marginVertical: 10 }}>
+                <Signature
+                  ref={signatureRef}
+                  onOK={Signature => {
+                    setFirmaData(Signature);
+                    console.log('Firma capturada: ', Signature);
+                  }}
+                  onEmpty={() => console.log('Firma vacía')}
+                  descriptionText="Firma aquí"
+                  clearText="Limpiar"
+                  confirmText="Confirmar"
+                  webStyle={`.m-signature-pad--footer {display: none; margin: 0;}`}
+                />
+              </View>
+
+              <TouchableOpacity
+                style={[styles.button, { backgroundColor: '#f0ad4e', marginTop: 10, alignSelf: 'center'  }]}
+                onPress={() => {
+                  if (signatureRef.current) {
+                    signatureRef.current.clearSignature();
+                  }
+                }}
+              >
+                <Text style={styles.buttonText}>Limpiar</Text>
+              </TouchableOpacity>
+
+
+              <View style={styles.modalButtons}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => {
+                    console.log('Firma guardada:', firmaData);
+                    setFirmaModalVisible(false);
+                  }}
+                >
+                  <Text style={styles.buttonText}>Guardar</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={[styles.button, { backgroundColor: '#999' }]}
+                  onPress={() => setFirmaModalVisible(false)}
+                >
+                  <Text style={styles.buttonText}>Cerrar</Text>
+                </TouchableOpacity>
+              </View>
+
+            </View>
+          </View>
+
         </Modal>
 
 
@@ -228,33 +435,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
   },
-  welcomeBox2: {//
-    backgroundColor: '#FFFFFF',
-    width: '88%',
-    height: 100,
-    padding: 20,
-    borderRadius: 20,
-    marginBottom: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5, // Para Android
-    position: 'absolute',
-    top: 100, // Ajusta este valor según sea necesario
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    zIndex: 1, // Asegura que este elemento esté por debajo de welcomeBox
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  welcomeText1: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'white',
-    textAlign: 'center',
-  },
   text: {
     fontSize: 24,
   },
@@ -282,7 +462,7 @@ const styles = StyleSheet.create({
   },
   modalInput: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#e60202',
     borderRadius: 8,
     paddingHorizontal: 10,
     paddingVertical: 5,
@@ -299,10 +479,10 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   radioCircle: {
-    width: 16,
-    height: 16,
-    borderRadius: 8,
-    borderWidth: 2,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    borderWidth: 1,
     borderColor: '#555',
     marginRight: 5,
   },
@@ -313,6 +493,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 20,
+  },
+  firmaButton: {
+    marginTop: 30,
+    backgroundColor: '#E02726',
   },
 
 });

@@ -1,8 +1,59 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function HomeScreen({ navigation, user }) {
+  const registrosRecientes = [
+    {
+      fecha: '2025-06-19',
+      numEconomico: '7347',
+      nombre: 'Jesus Carbajal',
+      numNomina: 'NP123',
+      placa: 'ABC-123',
+      status: 'Activo',
+    },
+    {
+      fecha: '2025-06-18',
+      numEconomico: '9867',
+      nombre: 'Jesus Carbajal',
+      numNomina: 'NP456',
+      placa: 'ABC-456',
+      status: 'Finalizado',
+    },
+    {
+      fecha: '2025-06-17',
+      numEconomico: '9867',
+      nombre: 'Jesus Carbajal',
+      numNomina: 'NP456',
+      placa: 'ABC-456',
+      status: 'Finalizado',
+    },
+    {
+      fecha: '2025-06-16',
+      numEconomico: '9867',
+      nombre: 'Jesus Carbajal',
+      numNomina: 'NP456',
+      placa: 'ABC-456',
+      status: 'Finalizado',
+    },
+    {
+      fecha: '2025-06-15',
+      numEconomico: '9867',
+      nombre: 'Jesus Carbajal',
+      numNomina: 'NP456',
+      placa: 'ABC-456',
+      status: 'Finalizado',
+    },
+    {
+      fecha: '2025-06-15',
+      numEconomico: '9867',
+      nombre: 'Jesus Carbajal',
+      numNomina: 'NP456',
+      placa: 'ABC-456',
+      status: 'Finalizado',
+    },
+
+  ];
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -16,22 +67,53 @@ export default function HomeScreen({ navigation, user }) {
       </View>
 
       <View style={styles.contentContainer}>
-        <Text style={styles.text}>Mantenimientos Pendientes</Text>
-        <View style={styles.infoBox}>
-          <Text style={styles.textInfo}>No. Economico</Text>
-          <Text style={styles.textInfo}>Folio: </Text>
-          <Text style={styles.textInfo}>Fecha: </Text>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={[styles.button, styles.buttonAutorizar]}>
-              <Text style={styles.buttonText}>Autorizar</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.button, styles.buttonDenegar]}>
-              <Text style={styles.buttonText}>Denegar</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View> 
-      <View></View>
+        <Text style={styles.text}>Salidas Recientes</Text>
+
+        <ScrollView contentContainerStyle={{ paddingBottom: 30 }}>
+          {registrosRecientes.map((registro, index) => (
+            <View key={index} style={styles.infoBox}>
+
+              <View style={styles.row}>
+                <Text style={styles.label}>Fecha: </Text>
+                <Text style={styles.cardText}>{registro.fecha}</Text>
+              </View>
+
+              <View style={styles.row}>
+                <Text style={styles.label}>No. Economíco: </Text>
+                <Text style={styles.cardText}>{registro.numEconomico}</Text>
+              </View>
+
+              <View style={styles.row}>
+                <Text style={styles.label}>Nombre: </Text>
+                <Text style={styles.cardText}>{registro.nombre}</Text>
+              </View>
+
+              <View style={styles.row}>
+                <Text style={styles.label}>No. Nómina: </Text>
+                <Text style={styles.cardText}>{registro.numNomina}</Text>
+              </View>
+
+              <View style={styles.row}>
+                <Text style={styles.label}>Placa: </Text>
+                <Text style={styles.cardText}>{registro.placa}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.label}>Status: </Text>
+                <Text
+                  style={
+                    registro.status === 'Activo' ? styles.estatusActivo : styles.estatusFinalizado
+                  }
+                >
+                  {registro.status}
+                </Text>
+              </View>
+
+            </View>
+          ))}
+        </ScrollView>
+
+      </View>
+
     </View>
   );
 }
@@ -138,5 +220,26 @@ const styles = StyleSheet.create({
     elevation: 5, // Para Android
     backgroundColor: '#FFFFFF',
     alignSelf: 'center',
+  },
+  cardText: {
+    fontSize: 16,
+    marginBottom: 0,
+  },
+  label: {
+    fontWeight: 'bold',
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 5,
+    alignItems: 'center',
+  },
+  estatusActivo: {
+    fontWeight: 'bold',
+    color: '#07d400',
+  },
+  estatusFinalizado: {
+    fontWeight: 'bold',
+    color: '#E02726',
   },
 });
