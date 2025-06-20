@@ -180,6 +180,11 @@ export default function ControlLlantasScreen() {   //-------------|
               />
 
               <View style={styles.modalButtons}>
+
+                <TouchableOpacity style={[styles.button, { backgroundColor: '#999' }]} onPress={() => setModalVisible(false)}>
+                  <Text style={styles.buttonText}>Cerrar</Text>
+                </TouchableOpacity>
+
                 <TouchableOpacity style={styles.button} onPress={() => {
                   // Aquí podrías guardar la info
                   console.log({ fecha, prioridad, descripcion });
@@ -188,9 +193,6 @@ export default function ControlLlantasScreen() {   //-------------|
                   <Text style={styles.buttonText}>Guardar</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={[styles.button, { backgroundColor: '#999' }]} onPress={() => setModalVisible(false)}>
-                  <Text style={styles.buttonText}>Cerrar</Text>
-                </TouchableOpacity>
               </View>
 
             </View>
@@ -266,6 +268,14 @@ export default function ControlLlantasScreen() {   //-------------|
               />
 
               <View style={styles.modalButtons}>
+
+                <TouchableOpacity
+                  style={[styles.button, { backgroundColor: '#999' }]}
+                  onPress={() => setLlantaModalVisible(false)}
+                >
+                  <Text style={styles.buttonText}>Cerrar</Text>
+                </TouchableOpacity>
+
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => {
@@ -276,12 +286,6 @@ export default function ControlLlantasScreen() {   //-------------|
                   <Text style={styles.buttonText}>Evaluar</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                  style={[styles.button, { backgroundColor: '#999' }]}
-                  onPress={() => setLlantaModalVisible(false)}
-                >
-                  <Text style={styles.buttonText}>Cerrar</Text>
-                </TouchableOpacity>
               </View>
 
 
@@ -317,7 +321,7 @@ export default function ControlLlantasScreen() {   //-------------|
               </View>
 
               <TouchableOpacity
-                style={[styles.button, { backgroundColor: '#f0ad4e', marginTop: 10, alignSelf: 'center'  }]}
+                style={[styles.button, { backgroundColor: '#f0ad4e', marginTop: 10, alignSelf: 'center' }]}
                 onPress={() => {
                   if (signatureRef.current) {
                     signatureRef.current.clearSignature();
@@ -329,6 +333,14 @@ export default function ControlLlantasScreen() {   //-------------|
 
 
               <View style={styles.modalButtons}>
+                
+                <TouchableOpacity
+                  style={[styles.button, { backgroundColor: '#999' }]}
+                  onPress={() => setFirmaModalVisible(false)}
+                >
+                  <Text style={styles.buttonText}>Cerrar</Text>
+                </TouchableOpacity>
+
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => {
@@ -338,13 +350,7 @@ export default function ControlLlantasScreen() {   //-------------|
                 >
                   <Text style={styles.buttonText}>Guardar</Text>
                 </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={[styles.button, { backgroundColor: '#999' }]}
-                  onPress={() => setFirmaModalVisible(false)}
-                >
-                  <Text style={styles.buttonText}>Cerrar</Text>
-                </TouchableOpacity>
+                
               </View>
 
             </View>
