@@ -15,7 +15,7 @@ import UnselectedLike from '../../assets/UnselectedLike.png';
 import UnselectedDislike from '../../assets/UnselectedDislike.png';
 
 export default function EntradaScreenForm({ route, navigation }) {
-  const { tabla_economico, user } = route.params;
+  const { tabla_economico = {}, user = {} } = route.params || {};
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("option1");
   const [items, setItems] = useState([
