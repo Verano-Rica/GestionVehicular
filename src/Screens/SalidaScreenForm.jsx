@@ -13,6 +13,7 @@ import Like from '../../assets/Like.png';
 import Dislike from '../../assets/Dislike.png';
 import UnselectedLike from '../../assets/UnselectedLike.png';
 import UnselectedDislike from '../../assets/UnselectedDislike.png';
+import ResultadoModal from '../Components/ResultadoModal';
 
 
 
@@ -29,12 +30,15 @@ export default function SalidaScreenForm({ route, navigation }) {
   const [unitStatusImage, setCheckUnit] = useState(Array(6).fill(false));
   // Arreglo 
   const [negativeUnitStatusImage, setCheckNegative] = useState(Array(6).fill(false));
+  // Estado para el modal
+  const [modalVisible, setModalVisible] = useState(false); // 👈 Nuevo estado
+
   // Arreglo para checkLikes
   const checkUnitStatus = (index) => {
     const newUnitStatus = [...unitStatusImage];
     if (negativeUnitStatusImage[index] === true && newUnitStatus[index] === false) {
       negativeUnitStatusImage[index] = false;
-    } 
+    }
     newUnitStatus[index] = true;
     setCheckUnit(newUnitStatus);
   };
@@ -43,7 +47,7 @@ export default function SalidaScreenForm({ route, navigation }) {
     const newUnitStatus = [...negativeUnitStatusImage];
     if (unitStatusImage[index] === true) {
       unitStatusImage[index] = false;
-    } 
+    }
     newUnitStatus[index] = !newUnitStatus[index];
     setCheckNegative(newUnitStatus);
   };
@@ -154,104 +158,111 @@ export default function SalidaScreenForm({ route, navigation }) {
 
   const handleSubmit = () => {
     // Lógica para manejar el envío del formulario
-    console.log('Formulario enviado');
+    setModalVisible(true); // Mostrar el modal al enviar
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.sectionContainer}>
-        <Text style={styles.subtitle}>Datos del usuario</Text>
-        <View style={styles.infoBox}>
-          <Text style={styles.textInfo}>Nombre: {user.R_nombre}</Text>
-          <Text style={styles.textInfo}>Posición: {user.R_posicion}</Text>
-          <Text style={styles.textInfo}>Número de Nómina: {user.R_nomina}</Text>
-        </View>
-      </View>
-
-      <View style={styles.sectionContainer}>
-        <Text style={styles.subtitle}>Datos de la unidad</Text>
-        <View style={styles.infoBox}>
-          <Text style={styles.textInfo}>Número Económico: {tabla_economico.R_economico}</Text>
-          <Text style={styles.textInfo}>Descripción: {tabla_economico.R_descripcion}</Text>
-          <Text style={styles.textInfo}>Placa: {tabla_economico.R_placa}</Text>
-          <Text style={styles.textInfo}>Tipo: {tabla_economico.R_tipo}</Text>
-        </View>
-      </View>
-
-      <View style={styles.sectionContainer}>
-        <Text style={styles.subtitle}>Datos de la salida</Text>
-        <Text style={styles.subsubtitle}> Ingrese kilometraje</Text>
-        <TextInput
-          style={styles.pickerContainer}
-          placeholder='Kilometraje'
-          keyboardType='numeric'
-        />
-        <Text style={styles.subsubtitle}>Destino</Text>
-        <DropDownPicker
-          open={open}
-          value={value}
-          items={items}
-          setOpen={setOpen}
-          setValue={setValue}
-          setItems={setItems}
-          style={styles.pickerContainer}
-        />
-      </View>
-
-      <View >
-        <Text style={styles.subsubtitle}>Estado de la unidad</Text>
-        <View style={{
-          borderTopColor: '#B51818',
-          borderBottomColor: '#B51818',
-          borderTopWidth: 1,
-          borderBottomWidth: 1,
-          marginBottom: 25
-        }}>
-          <Table borderStyle={{ borderWidth: 2, borderColor: '#fff' }}>
-            <Rows
-              data={UnitStatusTable}
-              widthArr={[225, 50, 65]}
-              textStyle={styles.text}
-              style={{
-                height: 65,
-              }}
-
-            />
-          </Table>
-        </View>
-
-        <Text style={styles.subsubtitle}>Documentación</Text>
-        {[0, 1, 2].map((row) => (
-          <View style={styles.row} key={row}>
-            {[0, 1].map((col) => {
-              const index = row * 2 + col;
-              return (
-                <TouchableOpacity
-                  style={styles.squareBox}
-                  key={col}
-                  onPress={() => handleCheckboxToggle(index)}
-                >
-                  <Image source={icons[index]} style={styles.icon} />
-                  <Text style={styles.textSquare}>{boxTexts[index]}</Text>
-                  <View
-                    style={[
-                      styles.checkbox,
-                      checkboxes[index] && styles.checkboxSelected,
-                    ]}
-                  >
-                    {checkboxes[index] && <Text style={styles.checkmark}>✓</Text>}
-                  </View>
-                </TouchableOpacity>
-              );
-            })}
+    <View style={{ flex: 1 }}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.subtitle}>Datos del usuario</Text>
+          <View style={styles.infoBox}>
+            <Text style={styles.textInfo}>Nombre: {user.R_nombre}</Text>
+            <Text style={styles.textInfo}>Posición: {user.R_posicion}</Text>
+            <Text style={styles.textInfo}>Número de Nómina: {user.R_nomina}</Text>
           </View>
-        ))}
-      </View>
+        </View>
 
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Enviar</Text>
-      </TouchableOpacity>
-    </ScrollView>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.subtitle}>Datos de la unidad</Text>
+          <View style={styles.infoBox}>
+            <Text style={styles.textInfo}>Número Económico: {tabla_economico.R_economico}</Text>
+            <Text style={styles.textInfo}>Descripción: {tabla_economico.R_descripcion}</Text>
+            <Text style={styles.textInfo}>Placa: {tabla_economico.R_placa}</Text>
+            <Text style={styles.textInfo}>Tipo: {tabla_economico.R_tipo}</Text>
+          </View>
+        </View>
+
+        <View style={styles.sectionContainer}>
+          <Text style={styles.subtitle}>Datos de la salida</Text>
+          <Text style={styles.subsubtitle}> Ingrese kilometraje</Text>
+          <TextInput
+            style={styles.pickerContainer}
+            placeholder='Kilometraje'
+            keyboardType='numeric'
+          />
+          <Text style={styles.subsubtitle}>Destino</Text>
+          <DropDownPicker
+            open={open}
+            value={value}
+            items={items}
+            setOpen={setOpen}
+            setValue={setValue}
+            setItems={setItems}
+            style={styles.pickerContainer}
+          />
+        </View>
+
+        <View >
+          <Text style={styles.subsubtitle}>Estado de la unidad</Text>
+          <View style={{
+            borderTopColor: '#B51818',
+            borderBottomColor: '#B51818',
+            borderTopWidth: 1,
+            borderBottomWidth: 1,
+            marginBottom: 25
+          }}>
+            <Table borderStyle={{ borderWidth: 2, borderColor: '#fff' }}>
+              <Rows
+                data={UnitStatusTable}
+                widthArr={[225, 50, 65]}
+                textStyle={styles.text}
+                style={{
+                  height: 65,
+                }}
+
+              />
+            </Table>
+          </View>
+
+          <Text style={styles.subsubtitle}>Documentación</Text>
+          {[0, 1, 2].map((row) => (
+            <View style={styles.row} key={row}>
+              {[0, 1].map((col) => {
+                const index = row * 2 + col;
+                return (
+                  <TouchableOpacity
+                    style={styles.squareBox}
+                    key={col}
+                    onPress={() => handleCheckboxToggle(index)}
+                  >
+                    <Image source={icons[index]} style={styles.icon} />
+                    <Text style={styles.textSquare}>{boxTexts[index]}</Text>
+                    <View
+                      style={[
+                        styles.checkbox,
+                        checkboxes[index] && styles.checkboxSelected,
+                      ]}
+                    >
+                      {checkboxes[index] && <Text style={styles.checkmark}>✓</Text>}
+                    </View>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          ))}
+        </View>
+
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>Enviar</Text>
+        </TouchableOpacity>
+      </ScrollView>
+      <ResultadoModal
+        visible={modalVisible}
+        tipo= "salida"
+        onClose={() => setModalVisible(false)}
+        />
+    </View>
   );
 }
 

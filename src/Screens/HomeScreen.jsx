@@ -1,8 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useNavigation } from '@react-navigation/native';
+
 
 export default function HomeScreen({ navigation, user }) {
+  
   const registrosRecientes = [
     {
       fecha: '2025-06-19',
@@ -70,47 +73,60 @@ export default function HomeScreen({ navigation, user }) {
         <Text style={styles.text}>Salidas Recientes</Text>
 
         <ScrollView contentContainerStyle={{ paddingBottom: 30 }}>
-          {registrosRecientes.map((registro, index) => (
-            <View key={index} style={styles.infoBox}>
+          {registrosRecientes.map((registro, index) => {
+            const Contenedor = registro.status === 'Activo' ? TouchableOpacity : View;
 
-              <View style={styles.row}>
-                <Text style={styles.label}>Fecha: </Text>
-                <Text style={styles.cardText}>{registro.fecha}</Text>
-              </View>
+            return (
+              <Contenedor
+                key={index}
+                style={registro.status === 'Activo' ? styles.infoBoxActivo : styles.infoBox}
+                onPress={
+                  registro.status === 'Activo'
+                    ? () => navigation.navigate('EntradaScreenForm')
+                    : null
+                }
+                activeOpacity={0.8}
+              >
+                <View style={styles.row}>
+                  <Text style={styles.label}>Fecha: </Text>
+                  <Text style={styles.cardText}>{registro.fecha}</Text>
+                </View>
 
-              <View style={styles.row}>
-                <Text style={styles.label}>No. Economíco: </Text>
-                <Text style={styles.cardText}>{registro.numEconomico}</Text>
-              </View>
+                <View style={styles.row}>
+                  <Text style={styles.label}>No. Económico: </Text>
+                  <Text style={styles.cardText}>{registro.numEconomico}</Text>
+                </View>
 
-              <View style={styles.row}>
-                <Text style={styles.label}>Nombre: </Text>
-                <Text style={styles.cardText}>{registro.nombre}</Text>
-              </View>
+                <View style={styles.row}>
+                  <Text style={styles.label}>Nombre: </Text>
+                  <Text style={styles.cardText}>{registro.nombre}</Text>
+                </View>
 
-              <View style={styles.row}>
-                <Text style={styles.label}>No. Nómina: </Text>
-                <Text style={styles.cardText}>{registro.numNomina}</Text>
-              </View>
+                <View style={styles.row}>
+                  <Text style={styles.label}>No. Nómina: </Text>
+                  <Text style={styles.cardText}>{registro.numNomina}</Text>
+                </View>
 
-              <View style={styles.row}>
-                <Text style={styles.label}>Placa: </Text>
-                <Text style={styles.cardText}>{registro.placa}</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.label}>Status: </Text>
-                <Text
-                  style={
-                    registro.status === 'Activo' ? styles.estatusActivo : styles.estatusFinalizado
-                  }
-                >
-                  {registro.status}
-                </Text>
-              </View>
+                <View style={styles.row}>
+                  <Text style={styles.label}>Placa: </Text>
+                  <Text style={styles.cardText}>{registro.placa}</Text>
+                </View>
 
-            </View>
-          ))}
+                <View style={styles.row}>
+                  <Text style={styles.label}>Status: </Text>
+                  <Text
+                    style={
+                      registro.status === 'Activo' ? styles.estatusActivo : styles.estatusFinalizado
+                    }
+                  >
+                    {registro.status}
+                  </Text>
+                </View>
+              </Contenedor>
+            );
+          })}
         </ScrollView>
+
 
       </View>
 
@@ -219,6 +235,20 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5, // Para Android
     backgroundColor: '#FFFFFF',
+    alignSelf: 'center',
+  },
+  infoBoxActivo: {
+    width: '95%',
+    padding: 20,
+    borderRadius: 10,
+    marginBottom: 20,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 8,
+    backgroundColor: '#FFFFFF', // rojo muy claro
+    borderColor: '#07d400',     // rojo más fuerte
+    borderWidth: 1.5,
     alignSelf: 'center',
   },
   cardText: {
