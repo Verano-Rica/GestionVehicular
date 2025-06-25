@@ -206,8 +206,8 @@ export default function SalidaScreenForm({ route, navigation }) {
         <View >
           <Text style={styles.subsubtitle}>Estado de la unidad</Text>
           <View style={{
-            borderTopColor: '#B51818',
-            borderBottomColor: '#B51818',
+            borderTopColor: '#E02726',
+            borderBottomColor: '#E02726',
             borderTopWidth: 1,
             borderBottomWidth: 1,
             marginBottom: 25
