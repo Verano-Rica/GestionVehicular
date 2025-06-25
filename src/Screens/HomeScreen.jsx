@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 
 export default function HomeScreen({ navigation, user }) {
-  
+
   const registrosRecientes = [
     {
       fecha: '2025-06-19',
@@ -59,14 +59,12 @@ export default function HomeScreen({ navigation, user }) {
   ];
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <View style={styles.welcomeBox}>
-          <Text style={styles.welcomeText1}>Bienvenido, {user.R_nombre}</Text>
-        </View>
-        <View style={styles.welcomeBox2}>
-          <Icon name="user" size={20} color="black" style={styles.icon} />
-          <Text style={styles.welcomeText2}>{user.R_posicion}</Text>
-        </View>
+      <View style={styles.welcomeBox}>
+        <Text style={styles.welcomeText1}>Bienvenido, {user.R_nombre}</Text>
+      </View>
+      <View style={styles.welcomeBox2}>
+        <Icon  name="user" size={20} color="black" style={styles.icon} />
+        <Text style={styles.welcomeText2}>Especialidad en {user.R_posicion}</Text>
       </View>
 
       <View style={styles.contentContainer}>
@@ -137,7 +135,8 @@ export default function HomeScreen({ navigation, user }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
+    // alignItems: 'center'
   },
   headerContainer: {
     alignItems: 'center',
@@ -145,38 +144,34 @@ const styles = StyleSheet.create({
   },
   welcomeBox: {
     backgroundColor: '#E02726',
-    width: '99%',
-    height: 145,
-    padding: 20,
-    borderRadius: 20,
-    marginBottom: 20,
-    position: 'relative',
-    zIndex: 0, // Asegura que este elemento esté por encima de otros elementos con zIndex menor
+    width: '90%',
+    height: '18%',
+    borderRadius: 15,
+    top: '3%',
+    alignItems: 'center',
+    alignSelf: 'center', // Solo este elemento se centra horizontalmente
   },
   welcomeBox2: {
-    backgroundColor: '#FFFFFF',
-    width: '88%',
-    height: 100,
-    padding: 20,
-    borderRadius: 20,
-    marginBottom: 20,
-    shadowColor: '#000',
+    backgroundColor: '#FFF',
+    shadowColor: '#AAFFA',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5, // Para Android
-    position: 'absolute',
-    top: 100, // Ajusta este valor según sea necesario
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    zIndex: 1, // Asegura que este elemento esté por debajo de welcomeBox
+    elevation: 6,
+    width: '80%',
+    height: '10%',
+    bottom: '4%',
+    borderRadius: 15,
+    paddingLeft: 10,
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center', // Solo este elemento se centra horizontalmente
   },
   icon: {
     marginRight: 10,
     color: '#E02726',
+    // paddingBottom: 10,
   },
   contentContainer: {
     flex: 1,
@@ -186,15 +181,15 @@ const styles = StyleSheet.create({
   },
   welcomeText1: {
     fontSize: 20,
+    color: '#fff',
     fontWeight: 'bold',
-    color: 'white',
+    top: '15%',
     textAlign: 'center',
   },
   welcomeText2: {
-    fontSize: 20,
-    fontWeight: 'LIGHT',
-    color: 'black',
-    textAlign: 'center',
+    fontSize: 15,
+    color: '#000',
+  flexShrink: 1, // ✅ permite que el texto se ajuste sin romper layout
   },
   text: {
     fontSize: 20,
