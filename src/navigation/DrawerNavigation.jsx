@@ -1,6 +1,6 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useUser } from '../contexts/UserContext';
 import StackNavigation from './StackNavigation';
@@ -52,6 +52,15 @@ function CustomDrawerContent({ navigation }) {
         />
         <Text style={styles.drawerButtonText}>Cerrar Sesión</Text>
       </TouchableOpacity>
+
+      {/* Contenedor de la imagen al fondo */}
+      <View style={styles.bottomImageContainer}>
+        <Image
+          source={require('../../assets/logo.png')} // Ajusta la ruta a tu imagen
+          style={styles.drawerImage}
+          resizeMode="contain"
+        />
+      </View>
     </View>
   );
 }
@@ -100,4 +109,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
+  bottomImageContainer: {
+    marginTop: 'auto',  // Empuja hacia abajo
+    alignItems: 'center',
+    paddingTop: 20,
+  },
+
+  drawerImage: {
+    width: 240,
+    height: 120,
+  },
+
 });
