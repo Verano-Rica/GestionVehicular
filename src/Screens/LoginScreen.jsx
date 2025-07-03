@@ -1,3 +1,7 @@
+// Grupo Rica
+//Verano Rica 2025
+//
+//
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import axios from 'axios';
@@ -9,37 +13,39 @@ export default function LoginScreen({ navigation }) {
   const [isFocused, setIsFocused] = useState(false);
   const { setUser } = useUser(); // Usa el contexto para establecer los datos del usuario
 
-  const handleLogin = async () => {
+  const handleLoginF = async () => {//Método para las pruebas sin WebService del Login
     if (nomina.trim() === '') {
       Alert.alert('Error', 'Por favor ingrese su número de nómina.');
       return;
-    }else{
-      const Fakeuser={
-        R_status : 'activo',
-        R_nomina : 2345,
-        R_nombre : "Jesus Alfonso Navarro Carbajal",
+    } else {
+      const Fakeuser = {//Datos de simulación de usuario
+        R_status: 'activo',
+        R_nomina: 2345,
+        R_nombre: "Jesus Alfonso Navarro Carbajal",
         R_posicion: 'Desarrollo de Software.'
       };
-      navigation.navigate('MainTabs', {user : Fakeuser});
+      navigation.navigate('MainTabs', { user: Fakeuser });
     }
+  };
 
-    // try {
-    //   const response = await axios.post('http://201.147.141.185:81/consumos/apps/WS_GV_SAP_NOM_ECO.php', {
-    //     nomina: nomina
-    //   });
+  const handleLogin = async () => {//Método funcional del Login
+    try {
+      const response = await axios.post('http://201.147.141.185:81/consumos/apps/WS_GV_SAP_NOM_ECO.php', {
+        nomina: nomina
+      });
 
-    //   const { tabla_nomina } = response.data;
+      const { tabla_nomina } = response.data;
 
-    //   if (tabla_nomina && tabla_nomina.R_status === 'ACTIVO') {
-    //     setUser(tabla_nomina); // Establece los datos del usuario en el contexto
-    //     navigation.navigate('MainTabs', { user: tabla_nomina });
-    //   } else {
-    //     Alert.alert('Error', 'Número de nómina no válido o usuario inactivo.');
-    //   }
-    // } catch (error) {
-    //   Alert.alert('Error', 'Hubo un problema con la solicitud. Por favor, inténtelo de nuevo.');
-    //   console.error(error);
-    // }
+      if (tabla_nomina && tabla_nomina.R_status === 'ACTIVO') {
+        setUser(tabla_nomina); // Establece los datos del usuario en el contexto
+        navigation.navigate('MainTabs', { user: tabla_nomina });
+      } else {
+        Alert.alert('Error', 'Número de nómina no válido o usuario inactivo.');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Hubo un problema con la solicitud. Por favor, inténtelo de nuevo.');
+      console.error(error);
+    }
   };
 
   return (
@@ -61,7 +67,6 @@ export default function LoginScreen({ navigation }) {
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
           />
-          {/* onPress={handleLogin} */}
           <TouchableOpacity style={styles.button} onPress={handleLogin}>
             <Text style={styles.buttonText}>Ingresar</Text>
           </TouchableOpacity>
@@ -72,14 +77,14 @@ export default function LoginScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  container: {//Contenedor principal
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
     backgroundColor: 'white',
   },
-  inner: {
+  inner: {//Subcontenedor del formulario
     width: '100%',
     alignItems: 'center',
   },
@@ -123,7 +128,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  row: {
+  row: {//CHECAR EN LA VISUALIZACION***
     flexDirection: 'row',
     marginTop: 16,
     alignItems: 'center',

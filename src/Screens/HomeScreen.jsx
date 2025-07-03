@@ -5,8 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 
 export default function HomeScreen({ navigation, user }) {
-
-  const registrosRecientes = [
+  const registrosRecientes = [//Datos simulados de entradas registradas y por solicitar autorización
     {
       fecha: '2025-06-19',
       numEconomico: '7347',
@@ -57,6 +56,8 @@ export default function HomeScreen({ navigation, user }) {
     },
 
   ];
+  //Espacio para implementar el uso de WebService
+  //++
   return (
     <View style={styles.container}>
       <View style={styles.welcomeBox}>
@@ -71,21 +72,20 @@ export default function HomeScreen({ navigation, user }) {
         <Text style={styles.text}>Salidas Recientes</Text>
 
         <ScrollView contentContainerStyle={{ paddingBottom: 30 }}>
-          {registrosRecientes.map((registro, index) => {
+          {registrosRecientes.map((registro, index) => {//Mapeo del arreglo de los datos simulados
             const Contenedor = registro.status === 'Activo' ? TouchableOpacity : View;
-
             return (
               <Contenedor
                 key={index}
                 style={registro.status === 'Activo' ? styles.infoBoxActivo : styles.infoBox}
                 onPress={
                   registro.status === 'Activo'
-                    ? () => navigation.navigate('EntradaScreenForm')
+                    ? () => navigation.navigate('EntradaScreenForm', {user})
                     : null
                 }
                 activeOpacity={0.8}
               >
-                <View style={styles.row}>
+                <View style={styles.row}>{/*Factorizar a un método que construya dinamicamente las cards*/}
                   <Text style={styles.label}>Fecha: </Text>
                   <Text style={styles.cardText}>{registro.fecha}</Text>
                 </View>
@@ -124,19 +124,15 @@ export default function HomeScreen({ navigation, user }) {
             );
           })}
         </ScrollView>
-
-
       </View>
-
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  container: {//Container principal
     flex: 1,
     backgroundColor: '#fff',
-    // alignItems: 'center'
   },
   headerContainer: {
     alignItems: 'center',

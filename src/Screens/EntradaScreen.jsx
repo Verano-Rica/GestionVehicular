@@ -7,35 +7,38 @@ export default function SalidaScreen({ route, navigation }) {
   const nomina = user.R_nomina || 'N/A';
   const [isFocused, setIsFocused] = useState(false);
   const [numeroEconomico, setNumeroEconomico] = useState('');
-  
+
   //Logs para verificar si envia los datos correctamente
- // console.log('SalidaScreen user:', user);
+  // console.log('SalidaScreen user:', user);
+
+  const handleNextF = async () => {
+    const fakeinfo = {
+      R_economico: 3242,
+      R_descripcion: 'lol',
+      R_placa: '3AS3',
+      R_tipo: 'Rapido'
+    }
+    navigation.navigate('EntradaScreenForm', { tabla_economico: fakeinfo, user });
+  };
 
   const handleNext = async () => {
-        const fakeinfo= {
-           R_economico : 3242,
-           R_descripcion: 'lol',
-           R_placa:  '3AS3',
-           R_tipo : 'Rapido'
 
+    try {
+      const response = await axios.post('http://201.147.141.185:81/consumos/apps/WS_GV_SAP_NOM_ECO.php', {
+        economico: numeroEconomico
+      });
+
+      const { tabla_economico } = response.data;
+
+      if (tabla_economico) {
+        navigation.navigate('EntradaScreenForm', { tabla_economico, user });
+      } else {
+        Alert.alert('Error', 'Número económico no válido.');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Hubo un problema con la solicitud. Por favor, inténtelo de nuevo.');
+      console.error(error);
     }
-      navigation.navigate('EntradaScreenForm', { tabla_economico: fakeinfo, user });
-    // try {
-    //   const response = await axios.post('http://201.147.141.185:81/consumos/apps/WS_GV_SAP_NOM_ECO.php', {
-    //     economico: numeroEconomico
-    //   });
-
-    //   const { tabla_economico } = response.data;
-
-    //   if (tabla_economico) {
-    //     navigation.navigate('EntradaScreenForm', { tabla_economico, user });
-    //   } else {
-    //     Alert.alert('Error', 'Número económico no válido.');
-    //   }
-    // } catch (error) {
-    //   Alert.alert('Error', 'Hubo un problema con la solicitud. Por favor, inténtelo de nuevo.');
-    //   console.error(error);
-    // }
   };
 
   return (
