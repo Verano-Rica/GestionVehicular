@@ -35,9 +35,13 @@ export default function ControlLlantasScreen() {   //-------------|
   return (
 
     <SafeAreaView style={{ flex: 1 }}>
+
+      {/* Contenedor Principal */}
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.header}>Datos de la unidad</Text>
 
+
+        {/* Información de la unidad */}
         <View style={styles.infoBox}>
           <View style={styles.row}>
             <Text style={styles.label}>Tipo:</Text>
@@ -61,6 +65,7 @@ export default function ControlLlantasScreen() {   //-------------|
 
 
 
+          {/* Boton con Modal para "Programar Revicion" */}
           <View style={styles.row}>
             <Text style={styles.label}>Próximna Revisión:</Text>
             <TouchableOpacity style={styles.button} onPress={() => setModalVisible(true)}>
@@ -71,6 +76,8 @@ export default function ControlLlantasScreen() {   //-------------|
         </View>
 
 
+
+        {/* Llantas con imagenes clickeables para mostrar tireModal */}
         <View style={styles.tireContainer}>
           <View style={styles.tireRow}>
             <TouchableOpacity
@@ -86,7 +93,7 @@ export default function ControlLlantasScreen() {   //-------------|
             >
               <Image source={require('../../assets/tire.png')} style={styles.tire} />
             </TouchableOpacity>
-
+            
             <TouchableOpacity
               activeOpacity={0.6}
               onPress={() => {
@@ -102,8 +109,11 @@ export default function ControlLlantasScreen() {   //-------------|
             </TouchableOpacity>
           </View>
 
+          {/* Imagen represantativa del vehciulo (Debe variar para los distintos vehiculos) */}
           <Image source={require('../../assets/car_top.png')} style={styles.car} />
 
+
+          {/* Llanta con imagene clickeable para mostrar tireModal */}
           <View style={styles.tireRow}>
             <TouchableOpacity
               activeOpacity={0.6}
@@ -135,6 +145,7 @@ export default function ControlLlantasScreen() {   //-------------|
           </View>
         </View>
 
+        {/* Boton con funcion para mostrar le modal tipo canvas para la firma diital*/}
         <TouchableOpacity style={[styles.button, styles.firmaButton]} onPress={() => setFirmaModalVisible(true)}>
           <Text style={styles.buttonText}>FIRMA</Text>
         </TouchableOpacity>
@@ -142,6 +153,7 @@ export default function ControlLlantasScreen() {   //-------------|
 
 
 
+        {/* Modal para programas revicion con formulario */}
         <Modal
           visible={modalVisible}
           animationType='slide'
@@ -200,6 +212,9 @@ export default function ControlLlantasScreen() {   //-------------|
           </View>
         </Modal>
 
+
+        {/* Modal Para mostrar y complementar los datos de cada llanta*/}
+        {/* El modal es dinamico se usa para todos los neumaticos con diferentes parametros*/}
         <Modal
           visible={llantaModalVisible}
           animationType='slide'
@@ -294,7 +309,8 @@ export default function ControlLlantasScreen() {   //-------------|
 
         </Modal>
 
-
+        {/* Modal para Firma Digital con el uso de una pantalla tipo canvas 
+            que el usuario dibuje su firma y la guarde */}
         <Modal
           visible={firmaModalVisible}
           animationType='slide'
@@ -368,12 +384,14 @@ export default function ControlLlantasScreen() {   //-------------|
 }
 
 const styles = StyleSheet.create({
+  //Titulo Principal de la Pantalla
   header: {
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 10,
     marginTop: -25,
   },
+  // Contenedor con sombreado para mostrar los datos de la unidad
   infoBox: {
     backgroundColor: '#FFF',
     padding: 20,
@@ -386,20 +404,24 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
+  // Etiqueta de información (izquierda en una fila)
   label: {
     fontWeight: 'bold',
     flex: 1,
   },
+  // Estilo para filas de información (label + valor)
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10,
     alignItems: 'center',
   },
+  // Valor de información (derecha en una fila)
   value: {
     flex: 1,
     textAlign: 'right',
   },
+  // Botón rojo reutilizable (por programar revisión o firmar)
   button: {
     backgroundColor: 'red',
     paddingHorizontal: 16,
@@ -408,66 +430,80 @@ const styles = StyleSheet.create({
     
     
   },
+  // Texto blanco dentro de los botones
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
   },
+  // Contenedor general del diagrama de llantas y coche
   tireContainer: {
     alignItems: 'center',
     marginVertical: 10,
   },
+  // Fila para mostrar dos llantas (superior o inferior)
   tireRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '70%',
     marginVertical: 0,
   },
+  // Imagen individual de una llanta
   tire: {
     width: 80,
     height: 120,
     resizeMode: 'contain',
   },
+  // Imagen del automovil
   car: {
     width: 120,
     height: 200,
     resizeMode: 'contain',
     marginVertical: -45,
   },
+  // Posiciona el botón de firma al centro con margen
   firmaButton: {
     marginTop: 20,
     alignSelf: 'center',
   },
+  // Contenedor principal de toda la pantalla
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
   },
-  text: {
-    fontSize: 24,
-  },
+  // 
+  // text: {
+  //   fontSize: 24,
+  // },
+
+  // Fondo gris semitransparente que oscurece el fondo cuando un modal está abierto
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.5)',
     justifyContent: 'center',
     alignItems: 'center',
   },
+  // Contenido blanco del modal (cuadro central)
   modalContent: {
     backgroundColor: '#fff',
     padding: 20,
     borderRadius: 15,
     width: '90%',
   },
+  //Titul centrado en Modales
   modalTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 15,
     textAlign: 'center',
   },
+  // Etiqueta de cada campo dentro del modal
   modalLabel: {
     fontWeight: 'bold',
     marginTop: 10,
   },
+  // Input de texto dentro de modales
   modalInput: {
     borderWidth: 1,
     borderColor: '#e60202',
@@ -476,16 +512,19 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     marginTop: 5,
   },
+  // Contenedor de botones tipo radio
   radioGroup: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginTop: 10,
   },
+  // Cada opción del grupo de radio
   radioOption: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 5,
   },
+  // Círculo del botón tipo radio (no seleccionado)
   radioCircle: {
     width: 20,
     height: 20,
@@ -494,14 +533,17 @@ const styles = StyleSheet.create({
     borderColor: '#555',
     marginRight: 5,
   },
+  // Estilo aplicado al radio seleccionado (fondo rojo)
   radioSelected: {
     backgroundColor: 'red',
   },
+  // Contenedor para los botones al final del modal
   modalButtons: {
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 20,
   },
+  // Botón individual dentro del modal
   modalButton: {
     backgroundColor: 'red',
     paddingHorizontal: 16,
@@ -509,7 +551,4 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginHorizontal: 30,
   }
-  
-
-  
 });

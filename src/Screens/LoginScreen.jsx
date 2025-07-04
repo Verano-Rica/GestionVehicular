@@ -1,7 +1,5 @@
 // Grupo Rica
 //Verano Rica 2025
-//
-//
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import axios from 'axios';
@@ -28,8 +26,10 @@ export default function LoginScreen({ navigation }) {
     }
   };
 
-  const handleLogin = async () => {//Método funcional del Login
+  //Método real para iniciar sesion usando WebService
+  const handleLogin = async () => {
     try {
+      //Peticion al servicio con la nomina
       const response = await axios.post('http://201.147.141.185:81/consumos/apps/WS_GV_SAP_NOM_ECO.php', {
         nomina: nomina
       });
@@ -55,9 +55,13 @@ export default function LoginScreen({ navigation }) {
     >
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.inner}>
-          <Image source={require('../../assets/logo.jpg')} style={{ width: 200, height: 200, marginBottom: 15 }} />
+          <Image source={require('../../assets/logo1.jpg')} style={{ width: 200, height: 200, marginBottom: 15 }} />
+          
+          {/* Texto de bienvenida */}
           <Text style={styles.title}>Bienvenido</Text>
           <Text style={styles.subtitle}>Ingresa tu nómina</Text>
+          
+          {/* Campo de entrada para nómina */}
           <TextInput
             style={[styles.input, isFocused && styles.inputFocused]}
             placeholder="Número de nómina"
@@ -67,7 +71,9 @@ export default function LoginScreen({ navigation }) {
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
           />
-          <TouchableOpacity style={styles.button} onPress={handleLogin}>
+
+          {/* Botón para iniciar sesión */}
+          <TouchableOpacity style={styles.button} onPress={handleLoginF}>
             <Text style={styles.buttonText}>Ingresar</Text>
           </TouchableOpacity>
         </View>
@@ -77,17 +83,20 @@ export default function LoginScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {//Contenedor principal
+  //Contenedor principal
+  container: {
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
     backgroundColor: 'white',
   },
-  inner: {//Subcontenedor del formulario
+  //Subcontenedor del formulario
+  inner: {
     width: '100%',
     alignItems: 'center',
   },
+  // Titulo prnicipal
   title: {
     fontSize: 30,
     marginBottom: 10,
@@ -95,6 +104,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignSelf: 'stretch',
   },
+  // Subtitulo (Ingresa tu nomina)
   subtitle: {
     fontSize: 20,
     marginBottom: 16,
@@ -103,6 +113,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     alignSelf: 'stretch',
   },
+  // Estilo base del input
   input: {
     width: '90%',
     padding: 15,
@@ -115,6 +126,7 @@ const styles = StyleSheet.create({
   inputFocused: {
     borderColor: 'red',
   },
+  //Boton de ingreso (Ingresar)
   button: {
     backgroundColor: '#E02726',
     padding: 15,
@@ -128,18 +140,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  row: {//CHECAR EN LA VISUALIZACION***
+  row: {                //CHECAR EN LA VISUALIZACION***
     flexDirection: 'row',
     marginTop: 16,
     alignItems: 'center',
   },
-  forgetnomina: {
+  forgetnomina: {       //CHECAR EN LA VISUALIZACION***
     fontSize: 14,
     marginRight: 5,
     fontWeight: '300',
     textAlign: 'center',
   },
-  searchnomina: {
+  searchnomina: {       //CHECAR EN LA VISUALIZACION***
     fontSize: 14,
     fontWeight: '300',
     textAlign: 'center',

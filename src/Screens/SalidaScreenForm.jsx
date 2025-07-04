@@ -18,6 +18,7 @@ import ResultadoModal from '../Components/ResultadoModal';
 
 
 export default function SalidaScreenForm({ route, navigation }) {
+  //Datos recibidos por navegación
   const { tabla_economico, user } = route.params;
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("option1");
@@ -164,6 +165,7 @@ export default function SalidaScreenForm({ route, navigation }) {
   return (
     <View style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={styles.container}>
+        {/* Datos del usuario y unidad */}
         <View style={styles.sectionContainer}>
           <Text style={styles.subtitle}>Datos del usuario</Text>
           <View style={styles.infoBox}>
@@ -173,6 +175,7 @@ export default function SalidaScreenForm({ route, navigation }) {
           </View>
         </View>
 
+        {/* Campos de entrada para kilometraje y destino */}
         <View style={styles.sectionContainer}>
           <Text style={styles.subtitle}>Datos de la unidad</Text>
           <View style={styles.infoBox}>
@@ -257,6 +260,7 @@ export default function SalidaScreenForm({ route, navigation }) {
           <Text style={styles.buttonText}>Enviar</Text>
         </TouchableOpacity>
       </ScrollView>
+      {/* Modal que aparece al presionar "Enviar" */}
       <ResultadoModal
         visible={modalVisible}
         tipo= "salida"
@@ -267,22 +271,27 @@ export default function SalidaScreenForm({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
+  // Contenedor principal del ScrollView
   container: {
     flexGrow: 1,
     padding: 20,
     backgroundColor: 'white',
   },
-  title: {
-    fontSize: 30,
-    marginBottom: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    alignSelf: 'stretch',
-  },
+  // Título principal (pantalla "Salida")
+  // title: {
+  //   fontSize: 30,
+  //   marginBottom: 20,
+  //   fontWeight: 'bold',
+  //   textAlign: 'center',
+  //   alignSelf: 'stretch',
+  // },
+
+  // Contenedor de cada sección (usuario, unidad, documentación)
   sectionContainer: {
     width: '100%',
     marginBottom: 10,
   },
+   // Título de sección (Ej: "Datos del usuario")
   subtitle: {
     fontSize: 18,
     marginBottom: 20,
@@ -291,6 +300,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     fontWeight: 'bold',
   },
+  // Subtítulo o instrucciones dentro de secciones
   subsubtitle: {
     fontSize: 15,
     marginBottom: 17,
@@ -299,6 +309,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     fontWeight: 'semibold',
   },
+  // Caja con sombra para agrupar info (usuario o unidad)
   infoBox: {
     width: '100%',
     paddingStart: 20,
@@ -314,10 +325,12 @@ const styles = StyleSheet.create({
     elevation: 5, // Para Android
     backgroundColor: '#FFFFFF',
   },
+  // Texto dentro de las infoBox
   textInfo: {
     fontSize: 16,
     marginBottom: 10,
   },
+  // Estilo del TextInput y del DropDown
   pickerContainer: {
     borderWidth: 1,
     borderColor: '#ccc',
@@ -325,11 +338,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginBottom: 16,
   },
+  // Fila horizontal para mostrar 2 columnas (Ej: documentos)
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 25,
   },
+  // Caja cuadrada que contiene el ícono, texto y checkbox (documentos)
   squareBox: {
     width: '45%',
     aspectRatio: 1,
@@ -361,7 +376,7 @@ const styles = StyleSheet.create({
     fontWeight: 'semibold',
     textAlign: 'center',
   },
-
+// Estilo visual del checkbox
   checkbox: {
     position: 'absolute',
     top: 10,
@@ -375,13 +390,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  // Estilo aplicado si el checkbox está seleccionado
   checkboxSelected: {
     backgroundColor: '#E02726',
   },
+  // Paloma (✓) dentro del checkbox
   checkmark: {
     color: 'white',
     fontWeight: 'bold',
   },
+  // Botón de enviar
   button: {
     backgroundColor: '#E02726',
     padding: 15,
@@ -392,6 +410,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 20,
   },
+  // Texto dentro del botón
   buttonText: {
     color: 'white',
     fontSize: 18,

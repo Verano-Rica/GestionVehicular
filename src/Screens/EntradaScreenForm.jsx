@@ -257,6 +257,7 @@ export default function EntradaScreenForm({ route, navigation }) {
         </TouchableOpacity>
       </ScrollView>
 
+      {/* Modal que aparece al presionar "Enviar" */}
       <ResultadoModal
         visible={modalVisible}
         tipo="entrada"
@@ -272,17 +273,20 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: 'white',
   },
-  title: {
-    fontSize: 30,
-    marginBottom: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    alignSelf: 'stretch',
-  },
+  // title: {
+  //   fontSize: 30,
+  //   marginBottom: 20,
+  //   fontWeight: 'bold',
+  //   textAlign: 'center',
+  //   alignSelf: 'stretch',
+  // },
+
+  // Contenedor de cada sección (usuario, unidad, documentación)
   sectionContainer: {
     width: '100%',
     marginBottom: 10,
   },
+  // Título de sección (Ej: "Datos del usuario")
   subtitle: {
     fontSize: 18,
     marginBottom: 20,
@@ -291,6 +295,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     fontWeight: 'bold',
   },
+  // Subtítulo o instrucciones dentro de secciones
   subsubtitle: {
     fontSize: 15,
     marginBottom: 17,
@@ -299,6 +304,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     fontWeight: 'semibold',
   },
+  // Caja con sombra para agrupar info (usuario o unidad)
   infoBox: {
     width: '100%',
     paddingStart: 20,
@@ -314,10 +320,12 @@ const styles = StyleSheet.create({
     elevation: 5, // Para Android
     backgroundColor: '#FFFFFF',
   },
+  // Texto dentro de las infoBox
   textInfo: {
     fontSize: 16,
     marginBottom: 10,
   },
+  // Estilo del TextInput y del DropDown
   pickerContainer: {
     borderWidth: 1,
     borderColor: '#ccc',
@@ -325,6 +333,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginBottom: 16,
   },
+  // Fila horizontal para mostrar 2 columnas (Ej: documentos)
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',

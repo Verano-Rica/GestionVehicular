@@ -71,13 +71,17 @@ export default function HomeScreen({ navigation, user }) {
       <View style={styles.contentContainer}>
         <Text style={styles.text}>Salidas Recientes</Text>
 
+
+        {/* Contenedor para Mostrar las card de registros recientes */}
         <ScrollView contentContainerStyle={{ paddingBottom: 30 }}>
           {registrosRecientes.map((registro, index) => {//Mapeo del arreglo de los datos simulados
+            
+            // Cnstruccion de la card de registro dependiendo si esta activo, se vuelve precionable (TouchableOpacity), si no, solo es un view 
             const Contenedor = registro.status === 'Activo' ? TouchableOpacity : View;
             return (
-              <Contenedor
+              <Contenedor  
                 key={index}
-                style={registro.status === 'Activo' ? styles.infoBoxActivo : styles.infoBox}
+                style={registro.status === 'Activo' ? styles.infoBoxActivo : styles.infoBox} 
                 onPress={
                   registro.status === 'Activo'
                     ? () => navigation.navigate('EntradaScreenForm', {user})
@@ -113,7 +117,7 @@ export default function HomeScreen({ navigation, user }) {
                 <View style={styles.row}>
                   <Text style={styles.label}>Status: </Text>
                   <Text
-                    style={
+                    style={      // Operador para asignar el estilo dependiendo del status 
                       registro.status === 'Activo' ? styles.estatusActivo : styles.estatusFinalizado
                     }
                   >
@@ -130,15 +134,17 @@ export default function HomeScreen({ navigation, user }) {
 }
 
 const styles = StyleSheet.create({
-  container: {//Container principal
+  //Container principal de toda la pantalla
+  container: {
     flex: 1,
     backgroundColor: '#fff',
   },
   headerContainer: {
-    alignItems: 'center',
+    alignItems: 'center',                  /* Revisar si se usa */
     padding: 16,
   },
-  welcomeBox: {
+  // Caja de bienvenida roja
+  welcomeBox: { 
     backgroundColor: '#E02726',
     width: '90%',
     height: '18%',
@@ -147,7 +153,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center', // Solo este elemento se centra horizontalmente
   },
-  welcomeBox2: {
+  // Segunda caja blanca con sombra
+  welcomeBox2: {  
     backgroundColor: '#FFF',
     shadowColor: '#AAFFA',
     shadowOffset: { width: 0, height: 2 },
@@ -164,58 +171,64 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center', // Solo este elemento se centra horizontalmente
   },
-  icon: {
+  // Icono del usuario detro de la caja blanca
+  icon: { 
     marginRight: 10,
     color: '#E02726',
     // paddingBottom: 10,
   },
-  contentContainer: {
+  // Contenedor para el area del contenido principal (ScrollView)
+  contentContainer: { 
     flex: 1,
     justifyContent: 'center',
     //alignItems: 'center',
     padding: 16,
   },
-  welcomeText1: {
+  // Texto de Bienvenida (Nombre del usuario)
+  welcomeText1: { 
     fontSize: 20,
     color: '#fff',
     fontWeight: 'bold',
     top: '15%',
     textAlign: 'center',
   },
-  welcomeText2: {
+  // Texto de especialidad debajo del nombre
+  welcomeText2: { 
     fontSize: 15,
     color: '#000',
-  flexShrink: 1, // ✅ permite que el texto se ajuste sin romper layout
+  flexShrink: 1, //  permite que el texto se ajuste sin romper layout
   },
-  text: {
+  // Titulo de la seccion (Salidas recientes)
+  text: { 
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'left',
     paddingLeft: 10,
   },
-  buttonContainer: {
+  buttonContainer: {                             /* Revisar si se usa */
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between',            
     marginTop: 15,
   },
-  button: {
+  button: {                                     /* Revisar si se usa */
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 5,                                   
     alignItems: 'center',
     width: '45%',
   },
-  buttonAutorizar: {
+  buttonAutorizar: {                            /* Revisar si se usa */
     backgroundColor: 'green',
   },
-  buttonDenegar: {
+  buttonDenegar: {                              /* Revisar si se usa */
     backgroundColor: '#E02726',
   },
-  buttonText: {
+  buttonText: {                                 /* Revisar si se usa */
     color: 'white',
     fontSize: 16,
   },
-  infoBox: {
+  // Tarjeta Normal (registro finalizado)
+  infoBox: { 
     width: '95%',
     padding: 20,
     borderRadius: 10,
@@ -228,7 +241,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     alignSelf: 'center',
   },
-  infoBoxActivo: {
+  // Tarjeta especial para registros activos (clickeables)
+  infoBoxActivo: {  
     width: '95%',
     padding: 20,
     borderRadius: 10,
@@ -242,23 +256,28 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     alignSelf: 'center',
   },
+  // Texto dentro de cada fila de informacion
   cardText: {
     fontSize: 16,
     marginBottom: 0,
   },
+  // Etiqueta en negrita
   label: {
     fontWeight: 'bold',
   },
+  // Fila de contenido (Label + Valor)
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 5,
     alignItems: 'center',
   },
+  // Estilo para el texto de estado Activo
   estatusActivo: {
     fontWeight: 'bold',
     color: '#07d400',
   },
+  // Estilo para el texto de estado Finalizado
   estatusFinalizado: {
     fontWeight: 'bold',
     color: '#E02726',

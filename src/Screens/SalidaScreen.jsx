@@ -11,6 +11,7 @@ export default function SalidaScreen({ route, navigation }) {
   //Logs para verificar si envia los datos correctamente
   // console.log('SalidaScreen user:', user);
 
+  // Funcion para pruebas sin conexion
   const handleNextF = async () => {
     const fakeinfo = {
       R_economico: 3242,
@@ -21,6 +22,8 @@ export default function SalidaScreen({ route, navigation }) {
     navigation.navigate('SalidaScreenForm', { tabla_economico: fakeinfo, user });
   };
 
+
+  // Funcion real para eviar el numero economico al WebServicio
   const handleNext = async () => {
 
     try {
@@ -31,6 +34,7 @@ export default function SalidaScreen({ route, navigation }) {
       const { tabla_economico } = response.data;
 
       if (tabla_economico) {
+        //Si recibe una respuesta valida, navega a la siguiente pantalla
         navigation.navigate('SalidaScreenForm', { tabla_economico, user });
       } else {
         Alert.alert('Error', 'Número económico no válido.');
@@ -45,8 +49,12 @@ export default function SalidaScreen({ route, navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Salida</Text>
+
+      {/* Texto guía para el usuario */}
       {/* <Text style={styles.subtitle}>Número de nómina: {nomina}</Text> */}
       <Text style={styles.subtitle}>Ingresa tu número económico</Text>
+
+      {/* Input para capturar el número económico */}
       <TextInput
         style={[styles.input, isFocused && styles.inputFocused]}
         placeholder="Número económico"
@@ -56,7 +64,9 @@ export default function SalidaScreen({ route, navigation }) {
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
       />
-      <TouchableOpacity style={styles.button} onPress={handleNext}>
+
+      {/* Botón para enviar el número económico */}
+      <TouchableOpacity style={styles.button} onPress={handleNextF}>
         <Text style={styles.buttonText}>Ingresar</Text>
       </TouchableOpacity>
     </View>
@@ -64,6 +74,7 @@ export default function SalidaScreen({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
+  //Contenedor Principal de la pantalla
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -71,6 +82,7 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: 'white',
   },
+  //Titulo Principal (Salida)
   title: {
     fontSize: 30,
     marginBottom: 10,
@@ -78,6 +90,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignSelf: 'stretch',
   },
+  // Subtítulo para indicar (ingresar número económico)
   subtitle: {
     fontSize: 20,
     marginBottom: 16,
@@ -86,6 +99,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     alignSelf: 'stretch',
   },
+  // Campo de entrada para número económico
   input: {
     width: '90%',
     padding: 15,
@@ -95,9 +109,11 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     backgroundColor: '#FBFBFB',
   },
+  // Estilo aplicado cuando el input está enfocado (borde rojo)
   inputFocused: {
     borderColor: 'red',
   },
+  // Botón para continuar (Ingresar)
   button: {
     backgroundColor: '#E02726',
     padding: 15,

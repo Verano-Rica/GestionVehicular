@@ -24,6 +24,7 @@ export default function SalidaScreen({ route, navigation }) {
   const handleNext = async () => {
 
     try {
+      // Funcion real para eviar el numero economico al WebServicio
       const response = await axios.post('http://201.147.141.185:81/consumos/apps/WS_GV_SAP_NOM_ECO.php', {
         economico: numeroEconomico
       });
@@ -31,6 +32,7 @@ export default function SalidaScreen({ route, navigation }) {
       const { tabla_economico } = response.data;
 
       if (tabla_economico) {
+        //Si recibe una respuesta valida, navega a la siguiente pantalla
         navigation.navigate('EntradaScreenForm', { tabla_economico, user });
       } else {
         Alert.alert('Error', 'Número económico no válido.');
@@ -44,8 +46,12 @@ export default function SalidaScreen({ route, navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Entrada</Text>
+
+      {/* Texto guía para el usuario */}
       {/* <Text style={styles.subtitle}>Número de nómina: {nomina}</Text> */}
       <Text style={styles.subtitle}>Ingresa tu folio</Text>
+
+      {/* Input para capturar el Folio */}
       <TextInput
         style={[styles.input, isFocused && styles.inputFocused]}
         placeholder="Folio"
@@ -55,7 +61,9 @@ export default function SalidaScreen({ route, navigation }) {
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
       />
-      <TouchableOpacity style={styles.button} onPress={handleNext}>
+
+      {/* Botón para enviar el Folio */}
+      <TouchableOpacity style={styles.button} onPress={handleNextF}>
         <Text style={styles.buttonText}>Ingresar</Text>
       </TouchableOpacity>
     </View>
@@ -63,6 +71,7 @@ export default function SalidaScreen({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
+  //Contenedor principal de la pantalla
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -70,6 +79,7 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: 'white',
   },
+  // Titulo principal (Entrada)
   title: {
     fontSize: 30,
     marginBottom: 10,
@@ -77,6 +87,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignSelf: 'stretch',
   },
+  // Subtítulo para indicar (ingresar Folio)
   subtitle: {
     fontSize: 20,
     marginBottom: 16,
@@ -85,6 +96,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     alignSelf: 'stretch',
   },
+    // Campo de entrada para Folio
   input: {
     width: '90%',
     padding: 15,
@@ -94,9 +106,11 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     backgroundColor: '#FBFBFB',
   },
+  // Estilo aplicado cuando el input está enfocado (borde rojo)
   inputFocused: {
     borderColor: 'red',
   },
+  // Botón para continuar (Ingresar)
   button: {
     backgroundColor: '#E02726',
     padding: 15,
