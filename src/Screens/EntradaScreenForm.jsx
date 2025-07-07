@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, TextInput } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { Picker } from '@react-native-picker/picker';
 import { Table, Row, Rows } from 'react-native-table-component';
 import ResultadoModal from '../Components/ResultadoModal';
 
@@ -191,15 +192,17 @@ export default function EntradaScreenForm({ route, navigation }) {
           />
 
           <Text style={styles.subsubtitle}>Destino</Text>
-          <DropDownPicker
-            open={open}
-            value={value}
-            items={items}
-            setOpen={setOpen}
-            setValue={setValue}
-            setItems={setItems}
-            style={styles.pickerContainer}
-          />
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={value}
+              onValueChange={(itemValue) => setValue(itemValue)}
+              mode="dropdown" // o "dialog" en Android
+            >
+              <Picker.Item label="Opción 1" value="option1" />
+              <Picker.Item label="Opción 2" value="option2" />
+              <Picker.Item label="Opción 3" value="option3" />
+            </Picker>
+          </View>
         </View>
 
         <View style={styles.sectionContainer}>
@@ -325,8 +328,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
   },
-  // Estilo del TextInput y del DropDown
+  // Estilo del TextInput y del Piker
   pickerContainer: {
+    height: 50,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,

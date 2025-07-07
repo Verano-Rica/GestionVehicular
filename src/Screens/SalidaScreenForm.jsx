@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, TextInput } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { Picker } from '@react-native-picker/picker';
 import { Table, Row, Rows } from 'react-native-table-component';
 
 import icon1 from '../../assets/1.png';
@@ -195,15 +196,17 @@ export default function SalidaScreenForm({ route, navigation }) {
             keyboardType='numeric'
           />
           <Text style={styles.subsubtitle}>Destino</Text>
-          <DropDownPicker
-            open={open}
-            value={value}
-            items={items}
-            setOpen={setOpen}
-            setValue={setValue}
-            setItems={setItems}
-            style={styles.pickerContainer}
-          />
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={value}
+              onValueChange={(itemValue) => setValue(itemValue)}
+              mode="dropdown" // o "dialog" en Android
+            >
+              <Picker.Item label="Opción 1" value="option1" />
+              <Picker.Item label="Opción 2" value="option2" />
+              <Picker.Item label="Opción 3" value="option3" />
+            </Picker>
+          </View>
         </View>
 
         <View >
@@ -263,9 +266,9 @@ export default function SalidaScreenForm({ route, navigation }) {
       {/* Modal que aparece al presionar "Enviar" */}
       <ResultadoModal
         visible={modalVisible}
-        tipo= "salida"
+        tipo="salida"
         onClose={() => setModalVisible(false)}
-        />
+      />
     </View>
   );
 }
@@ -291,7 +294,7 @@ const styles = StyleSheet.create({
     width: '100%',
     marginBottom: 10,
   },
-   // Título de sección (Ej: "Datos del usuario")
+  // Título de sección (Ej: "Datos del usuario")
   subtitle: {
     fontSize: 18,
     marginBottom: 20,
@@ -332,6 +335,7 @@ const styles = StyleSheet.create({
   },
   // Estilo del TextInput y del DropDown
   pickerContainer: {
+    height: 50,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
@@ -376,7 +380,7 @@ const styles = StyleSheet.create({
     fontWeight: 'semibold',
     textAlign: 'center',
   },
-// Estilo visual del checkbox
+  // Estilo visual del checkbox
   checkbox: {
     position: 'absolute',
     top: 10,
